@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  api:
+    container_name: api
+    build: .
+    networks:
+      - apiflasknetwork
+  webserver:
+    container_name: webserver
+    image: nginx:latest
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - apiflasknetwork
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - apiflasknetwork
+
+networks:
+  apiflasknetwork:
+    driver: bridge
+
+volumes:
+  mongodata:
+
+
+
+
